@@ -27,6 +27,7 @@ namespace API
         {
             services.AddControllers();
             services.AddSingleton<IFibonacciService, LocalFibonacciService>();
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
