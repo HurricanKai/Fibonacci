@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: fibonacci-api-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: fibonacci-api
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - fibonacci-api-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /fibonacci
+    route:
+    - destination:
+        host: fibonacci-api
+        port:
+          number: 80
