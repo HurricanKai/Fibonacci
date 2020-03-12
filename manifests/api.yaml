@@ -35,31 +35,28 @@ spec:
         imagePullPolicy: IfNotPresent #Always
         ports:
         - containerPort: 80
-#---
-#apiVersion: apps/v1
-#kind: Deployment
-#metadata:
-#  name: fibonacci-api-v2
-#  labels:
-#    version: v2
-#spec:
-#  replicas: 1
-#  selector:
-#    matchLabels:
-#      app: fibonacci-api
-#      version: v2
-#  template:
-#    metadata:
-#      labels:
-#        app: fibonacci-api
-#        version: v2
-#    spec:
-#      containers:
-#      - name: fibonacci-api
-#        image: docker.io/istio/examples-fibonacci-v2
-#        resources:
-#          requests:
-#            cpu: "100m"
-#        imagePullPolicy: IfNotPresent #Always
-#        ports:
-#        - containerPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fibonacci-api-v2
+  labels:
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fibonacci-api
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: fibonacci-api
+        version: v2
+    spec:
+      containers:
+      - name: fibonacci-api
+        image: docker.pkg.github.com/hurricankai/fibonacci/api:v2
+        imagePullPolicy: IfNotPresent #Always
+        ports:
+        - containerPort: 80
