@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fibonacci-worker-v1
+  labels:
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fibonacci-worker
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: fibonacci-worker
+        version: v1
+    spec:
+      containers:
+      - name: fibonacci-worker
+        image: docker.pkg.github.com/hurricankai/fibonacci/worker:v1
+        imagePullPolicy: Always
+        env:
+        - name: JAEGER_PROPAGATION
+          value: b3
+        - name: JAEGER_TRACEID_128BIT
+          value: "true"
+        - name: JAEGER_SERVICE_NAME
+          value: fibonacci-worker-v1
+        - name: JAEGER_AGENT_HOST
+          value: jaeger-agent.istio-system
+        - name: JAEGER_AGENT_PORT
+          value: "6831"
+        - name: JAEGER_SAMPLER_TYPE
+          value: const
+      imagePullSecrets:
+      - name: regcred

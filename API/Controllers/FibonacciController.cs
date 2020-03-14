@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Shared;
 
 namespace API.Controllers
 {
@@ -12,18 +14,19 @@ namespace API.Controllers
     public class FibonacciController : ControllerBase
     {
         private readonly ILogger<FibonacciController> _logger;
-        private readonly IFibonacciService _fibonacciService;
+        private readonly IRequestClient<FibonacciRequestV1> _requestClient;
 
-        public FibonacciController(ILogger<FibonacciController> logger, IFibonacciService fibonacciService)
+        public FibonacciController(ILogger<FibonacciController> logger, IRequestClient<FibonacciRequestV1> requestClient)
         {
             _logger = logger;
-            _fibonacciService = fibonacciService;
+            _requestClient = requestClient;
         }
 
         [HttpGet("{n}")]
-        public Task<int> Get([FromRoute] int n)
+        public async Task<int> Get([FromRoute] int n)
         {
-            return _fibonacciService.FAsync(n);
+            var response = await _requestClient.GetResponse<FibonacciResponseV1>(new {N = n, CorrelationId = NewId.NextGuid()});
+            return response.Message.Result;
         }
     }
 }

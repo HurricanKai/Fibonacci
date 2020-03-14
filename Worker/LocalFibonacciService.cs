@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace API
+namespace Worker
 {
     public sealed class LocalFibonacciService : IFibonacciService
     {

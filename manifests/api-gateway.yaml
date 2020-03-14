@@ -14,6 +14,23 @@ spec:
     - "*"
 ---
 apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: fibonacci-api-destination
+spec:
+  host: fibonacci-api
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+  - name: v2
+    labels:
+      version: v2
+  - name: v3
+    labels:
+      version: v3
+---
+apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: fibonacci-api
@@ -23,11 +40,17 @@ spec:
   gateways:
   - fibonacci-api-gateway
   http:
-  - match:
-    - uri:
-        prefix: /fibonacci
-    route:
+  - route:
     - destination:
         host: fibonacci-api
-        port:
-          number: 80
+        subset: v1
+      weight: 0
+    - destination:
+        host: fibonacci-api
+        subset: v2
+      weight: 0
+    - destination:
+        host: fibonacci-api
+        subset: v3
+      weight: 100
+  

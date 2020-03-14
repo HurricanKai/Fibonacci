@@ -35,6 +35,8 @@ spec:
         imagePullPolicy: IfNotPresent #Always
         ports:
         - containerPort: 80
+      imagePullSecrets:
+      - name: regcred
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -60,3 +62,45 @@ spec:
         imagePullPolicy: IfNotPresent #Always
         ports:
         - containerPort: 80
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fibonacci-api-v3
+  labels:
+    version: v3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fibonacci-api
+      version: v3
+  template:
+    metadata:
+      labels:
+        app: fibonacci-api
+        version: v3
+    spec:
+      containers:
+      - name: fibonacci-api
+        image: docker.pkg.github.com/hurricankai/fibonacci/api:v3
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: JAEGER_PROPAGATION
+          value: b3
+        - name: JAEGER_TRACEID_128BIT
+          value: "true"
+        - name: JAEGER_SERVICE_NAME
+          value: fibonacci-api-v3
+        - name: JAEGER_AGENT_HOST
+          value: jaeger-agent.istio-system
+        - name: JAEGER_AGENT_PORT
+          value: "6831"
+        - name: JAEGER_SAMPLER_TYPE
+          value: const
+      imagePullSecrets:
+      - name: regcred

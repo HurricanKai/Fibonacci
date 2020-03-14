@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UserSecretsId>dotnet-Worker-EEE569DC-C9E3-4991-9A20-D7AB0CFD32A5</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Jaeger" Version="0.3.7" />
+        <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="6.2.1" />
+        <PackageReference Include="MassTransit.RabbitMQ" Version="6.2.1" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.1.2" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.2" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.2" />
+        <PackageReference Include="OpenTracing" Version="0.12.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\OpenTracing.Contrib.NetCore\OpenTracing.Contrib.NetCore.csproj" />
+      <ProjectReference Include="..\Shared\Shared.csproj" />
+    </ItemGroup>
+</Project>

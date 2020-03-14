@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MassTransit" Version="6.2.1" />
+      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.2" />
+      <PackageReference Include="OpenTracing" Version="0.12.1" />
+    </ItemGroup>
+
+</Project>

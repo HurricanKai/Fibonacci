@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace API
+namespace Worker
 {
     public interface IFibonacciService
     {
