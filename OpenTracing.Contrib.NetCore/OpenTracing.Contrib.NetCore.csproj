@@ -11,7 +11,7 @@ Instrumented components: HttpClient calls, ASP.NET Core, Entity Framework Core a
     <!-- Main dependencies -->
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="OpenTracing" Version="0.12.1" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
